@@ -1,0 +1,81 @@
+<!-- ============================================================ -->
+<!-- CARD 4 — Lines of Code (LOC)                                -->
+<!-- ============================================================ -->
+<mat-card class="rounded-xl! flex flex-col items-center py-5">
+  <form [formGroup]="locForm">
+    <mat-card-header class="!pb-2">
+      <mat-card-title class="!text-xl !font-semibold">Lines of Code (LOC)</mat-card-title>
+    </mat-card-header>
+
+    <mat-card-content class="!pt-2">
+
+      <!-- FP input -->
+      <mat-form-field appearance="outline" class="w-full mb-2">
+        <mat-label>Function Points (FP)</mat-label>
+        <input matInput type="number" min="0" formControlName="fp" />
+      </mat-form-field>
+
+      <!-- Language select + AVC display -->
+      <div class="flex items-center gap-3 flex-wrap mb-2">
+        <mat-form-field appearance="outline" class="flex-[2] min-w-[200px]">
+          <mat-label>Programming Language</mat-label>
+          <mat-select
+            formControlName="language"
+            (selectionChange)="onLanguageChange($event.value)"
+          >
+            @for (lang of languages; track lang.name) {
+              <mat-option [value]="lang.name">{{ lang.name }}</mat-option>
+            }
+          </mat-select>
+        </mat-form-field>
+
+        <mat-form-field appearance="outline" class="flex-1 min-w-[120px]">
+          <mat-label>AVC (Lines / FP)</mat-label>
+          <input matInput type="number" [value]="selectedAvc ?? ''" readonly />
+        </mat-form-field>
+      </div>
+
+      <p class="text-sm text-white/60 mb-4"><strong>Formula:</strong> LOC = FP × AVC</p>
+
+      <button
+        mat-raised-button
+        color="primary"
+        type="button"
+        class="w-full font-medium tracking-wide"
+        (click)="calculateLOC()"
+      >
+        Calculate LOC
+      </button>
+
+      @if (locCalculated && locResult; as res) {
+        <div class="mt-5">
+          <mat-divider class="!mb-4"></mat-divider>
+
+          <h3 class="text-base font-semibold mb-3 text-white/80">LOC Results</h3>
+
+          <div class="flex flex-col gap-1.5 mb-3">
+            <div class="flex justify-between items-center px-3 py-2 rounded-md text-sm">
+              <span class="text-white/65">Function Points (FP)</span>
+              <span class="font-semibold text-white/90">{{ res.loc / res.avc }}</span>
+            </div>
+            <div class="flex justify-between items-center px-3 py-2 rounded-md text-sm">
+              <span class="text-white/65">Language</span>
+              <span class="font-semibold text-white/90">{{ res.language }}</span>
+            </div>
+            <div class="flex justify-between items-center px-3 py-2 rounded-md text-sm">
+              <span class="text-white/65">AVC</span>
+              <span class="font-semibold text-white/90">{{ res.avc }}</span>
+            </div>
+          </div>
+
+          <hr />
+
+          <div class="flex justify-between items-center px-4 py-3 rounded-lg">
+            <h3 class="text-base font-semibold text-white/80">Lines of Code (LOC)</h3>
+            <span class="text-xl font-bold text-white">{{ res.loc }}</span>
+          </div>
+        </div>
+      }
+    </mat-card-content>
+  </form>
+</mat-card>

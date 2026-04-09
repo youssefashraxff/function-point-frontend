@@ -1,0 +1,66 @@
+<!-- ============================================================ -->
+<!-- CARD 3 — Function Points (FP)                               -->
+<!-- ============================================================ -->
+<mat-card class="rounded-xl! flex flex-col items-center py-5">
+  <form [formGroup]="fpForm">
+    <mat-card-header class="!pb-2">
+      <mat-card-title class="!text-xl !font-semibold">Function Points (FP)</mat-card-title>
+    </mat-card-header>
+
+    <mat-card-content class="!pt-2">
+
+      <!-- UFP × TCF inputs -->
+      <div class="flex items-center gap-3 flex-wrap mb-2">
+        <mat-form-field appearance="outline" class="flex-1 min-w-[120px]">
+          <mat-label>UFP</mat-label>
+          <input matInput type="number" min="0" formControlName="ufp" />
+        </mat-form-field>
+
+        <span class="text-2xl font-semibold text-white/55 select-none">×</span>
+
+        <mat-form-field appearance="outline" class="flex-1 min-w-[120px]">
+          <mat-label>TCF</mat-label>
+          <input matInput type="number" min="0" step="0.01" formControlName="tcf" />
+        </mat-form-field>
+      </div>
+
+      <p class="text-sm text-white/60 mb-4"><strong>Formula:</strong> FP = UFP × TCF</p>
+
+      <button
+        mat-raised-button
+        color="primary"
+        type="button"
+        class="w-full font-medium tracking-wide"
+        (click)="calculateFP()"
+      >
+        Calculate FP
+      </button>
+
+      @if (fpCalculated && fpResult; as res) {
+        <div class="mt-5">
+          <mat-divider class="!mb-4"></mat-divider>
+
+          <h3 class="text-base font-semibold mb-3 text-white/80">FP Results</h3>
+
+          <div class="flex flex-col gap-1.5 mb-3">
+            <div class="flex justify-between items-center px-3 py-2 rounded-md text-sm">
+              <span class="text-white/65">UFP</span>
+              <span class="font-semibold text-white/90">{{ fpForm.value.ufp }}</span>
+            </div>
+            <div class="flex justify-between items-center px-3 py-2 rounded-md text-sm">
+              <span class="text-white/65">TCF</span>
+              <span class="font-semibold text-white/90">{{ fpForm.value.tcf }}</span>
+            </div>
+          </div>
+
+          <hr />
+
+          <div class="flex justify-between items-center px-4 py-3 rounded-lg">
+            <h3 class="text-base font-semibold text-white/80">Function Points (FP)</h3>
+            <span class="text-xl font-bold text-white">{{ res.fp }}</span>
+          </div>
+        </div>
+      }
+    </mat-card-content>
+  </form>
+</mat-card>
