@@ -1,4 +1,4 @@
 export const environments = {
   prod: false,
-  API_URL: 'http://localhost:5243/',
+  API_URL: 'https://functionpointapi-production.up.railway.app/',
 };
